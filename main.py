@@ -26,19 +26,13 @@ date_today = date.today()
 
 df = pandas.read_excel("data.xlsx")
 
-print(df)
+#print(df)
 #print(df.index)
-print(df.loc[0]) #important for later
 
-print("Len: " , len(df)) #important for later [number of rows]
-"""
-df = pandas.read_excel("data.xlsx") 
-#print(type(df))
-print(df.columns)
-print("")
-print(df.values)
-print("")
-print(df)
-print("popping")
-print(df.pop("b1"))
-"""
+
+#print(df.loc[0]) #important for later
+#print("Len: " , len(df)) #important for later [number of rows]
+
+for i in range(len(df)):
+    print(df.loc[i])
+    print("--")
