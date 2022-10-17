@@ -1,6 +1,7 @@
 import tkinter as tk
-
+"""
 def create_grid(event=None):
+    #draws empty grid
     w = c.winfo_width() # Get current width of canvas
     h = c.winfo_height() # Get current height of canvas
     c.delete('grid_line') # Will only remove the grid_line
@@ -12,7 +13,10 @@ def create_grid(event=None):
     # Creates all horizontal lines at intevals of 100
     for i in range(30, h - 30, 20):
         c.create_line([(70, i), (w - 73, i)], tag='grid_line')
-
+"""
+def create_grid(event=None):
+    tk.canvas.create_rectangle(100, 110, 100, 110, fill = "red")
+    
 root = tk.Tk()
 
 c = tk.Canvas(root, height=200, width=500, bg='white')
