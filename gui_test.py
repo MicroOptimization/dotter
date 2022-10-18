@@ -39,19 +39,49 @@ class grid(Frame):
 
         self.make_grid()
 
+
+    def get_box_shade(cur_val, maximum) -> str:
+        pom = cur_val / maximum #pom = percentage of max value
+        print(pom)
+        shade = "#"
+        if (80 < pom) & (pom <= 100):
+            shade += "5ff0f2"
+        elif (60 < pom) & (pom <= 80):
+            shade += "31ebef"
+        elif (40 < pom) & (pom <= 60):
+            shade += "15babe"
+        elif (20 < pom) & (pom <= 40):
+            shade += "0d7577"
+        elif (0 <= pom) & (pom <= 20):
+            shade += "052f2f"
+        else:
+            shade = shade
+        return shade
+    
     def make_grid(self):
         sheet_name = "data"
         df = pandas.read_excel(sheet_name + ".xlsx")
 
+        maximum = 0
+        for i in range(len(df)):
+            if df.loc[i][1] > maximum:
+                maximum = df.loc[i][1]
+        print("maximum" , maximum)
 
+        
+
+        
         #we're looking for the day of the week that's last recorded in our spreadsheet
+
         last_date = df.loc[len(df) - 1][0]     
         date_split = last_date.split("-")
         date = datetime.datetime(int(date_split[2]), int(date_split[0]), int(date_split[1]), 0, 0, 0, 0)
         last_weekday = date.weekday() #0 = monday
-        print("lwd:" , last_weekday)
+        #print("lwd:" , last_weekday)
         
-        print(last_date)
+        #print(last_date)
+
+        
         
         self.master.title("Dotter")
         self.pack(fill=BOTH, expand=0)
@@ -91,8 +121,6 @@ class grid(Frame):
                 canvas.create_rectangle(gsp_x1 + xpo, gsp_y1 + ypo, gsp_x2 + xpo, gsp_y2 + ypo, outline="#111111", fill=fill_color)
            
         
-        #canvas.create_rectangle(2, 50, 52, 100, outline="#111111", fill="#fb0")
-
         
         
         canvas.pack(fill=BOTH, expand=0)
