@@ -38,14 +38,29 @@ class grid(Frame):
         gsp_x2 = 42
         gsp_y1 = 22
         gsp_y2 = 42
-        
+        square_dim = 20
         #canvas.create_rectangle(2, 2, 52, 52, outline="#111111", fill="#fb0")
-        grid_width = 15
+
+        cur_day = 0
+        
+        grid_width = 18
         for j in range(grid_width):
-            xpo = j * 20
+            xpo = j * square_dim
             for i in range(7):
-                ypo = i * 20
-                fill_color = "#fb0"
+                ypo = i * square_dim
+                cur_day += 1
+                if cur_day > 120:
+                    fill_color = "#999999"
+                elif cur_day > 90:
+                    fill_color = "#666666"
+                elif cur_day > 60:
+                    fill_color = "#444444"
+                elif cur_day > 30:
+                    fill_color = "#333333"
+                else:
+                    fill_color = "#222222"
+                #fill_color = "#fb0"
+                
                 canvas.create_rectangle(gsp_x1 + xpo, gsp_y1 + ypo, gsp_x2 + xpo, gsp_y2 + ypo, outline="#111111", fill=fill_color)
            
         
