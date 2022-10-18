@@ -15,6 +15,17 @@ def create_grid(event=None):
     for i in range(30, h - 30, 20):
         c.create_line([(70, i), (w - 73, i)], tag='grid_line')
 """
+
+"""
+We need TODO:
+1) Check the last index of the dataFrame and get the date.
+2) Get the day of week, and draw that in the appropriate y coordinate
+3) draw the rest of its week
+4) draw a blank week in front of it
+5) draw 120 days worth of squares behind it.
+6) fill in squares as neccesary
+"""
+
 #def create_grid(event=None):
 #    tk.Canvas.create_rectangle(100, 110, 100, 110, fill = "red")
 
