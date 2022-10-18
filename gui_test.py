@@ -1,5 +1,8 @@
 import tkinter as tk
 from tkinter import *
+import pandas
+import datetime
+
 """
 def create_grid(event=None):
     #draws empty grid
@@ -37,6 +40,19 @@ class grid(Frame):
         self.make_grid()
 
     def make_grid(self):
+        sheet_name = "data"
+        df = pandas.read_excel(sheet_name + ".xlsx")
+
+
+        #we're looking for the day of the week that's last recorded in our spreadsheet
+        last_date = df.loc[len(df) - 1][0]     
+        date_split = last_date.split("-")
+        date = datetime.datetime(int(date_split[2]), int(date_split[0]), int(date_split[1]), 0, 0, 0, 0)
+        last_weekday = date.weekday() #0 = monday
+        print("lwd:" , last_weekday)
+        
+        print(last_date)
+        
         self.master.title("Dotter")
         self.pack(fill=BOTH, expand=0)
 
@@ -82,6 +98,8 @@ class grid(Frame):
         canvas.pack(fill=BOTH, expand=0)
 
 root = tk.Tk()
+
+
 
 ex = grid()
 
