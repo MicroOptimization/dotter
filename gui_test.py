@@ -52,36 +52,38 @@ class grid(Frame):
             shade += "15babe"
         elif (20 < pom) & (pom <= 40):
             shade += "0d7577"
-        elif (0 <= pom) & (pom <= 20):
+        elif (0 < pom) & (pom <= 20):
             shade += "052f2f"
+        elif (pom <= 0):
+            shade += "ffffff"
         else:
             shade = shade
         return shade
     
     def make_grid(self):
-        sheet_name = "data"
+        sheet_name = "leetcode_tracking"
         df = pandas.read_excel(sheet_name + ".xlsx")
 
         maximum = 0
         for i in range(len(df)):
             if df.loc[i][1] > maximum:
                 maximum = df.loc[i][1]
-        print("maximum" , maximum)
+        #print("maximum" , maximum)
 
         
 
         
         #we're looking for the day of the week that's last recorded in our spreadsheet
-
+        #the below few lines does that
         last_date = df.loc[len(df) - 1][0]     
         date_split = last_date.split("-")
         date = datetime.datetime(int(date_split[2]), int(date_split[0]), int(date_split[1]), 0, 0, 0, 0)
         last_weekday = date.weekday() #0 = monday
         #print("lwd:" , last_weekday)
-        
+        #print("lwd: " , last_weekday)
         #print(last_date)
 
-        
+        #oct 6, = thursday = 3        
 
 
         
@@ -91,8 +93,8 @@ class grid(Frame):
         canvas = Canvas(self) #important ************************
 
         
-        xpo = 0 #x positional offset
-        ypo = 0 #y positional offset
+        xpo = 0 #x positional offset #determines current x position for next square
+        ypo = 0 #y positional offset #determines current y position for next square
 
         #grid starting points (for first rectangle)
         gsp_x1 = 22
@@ -109,12 +111,21 @@ class grid(Frame):
         cur_data = 0
         ppt_len = len(df)
         grid_width = 18
+        grid_height = 7
+        original_grid_height = grid_height
         for j in range(grid_width, 0, -1):
             xpo = j * square_dim #important
-            for i in range(7, 0, -1):
+            
+            if j == grid_width:
+                grid_height = last_weekday + 1
+            else:
+                grid_height = original_grid_height
+                
+            for i in range(grid_height, 0, -1):
                 ypo = i * square_dim #important
 
-                fill_color = "#fb0"
+                #fill_color = "#fb0"
+                fill_color = "#fff"
                 
                 if cur_day < ppt_len:  
                     cur_data = df.loc[ppt_len - 1 - cur_day][1]
@@ -127,6 +138,8 @@ class grid(Frame):
                 
                 #print(gsp_x2 + xpo, gsp_y2 + ypo) #2) final value: 382 162 
                 #print(gsp_x1 + xpo, gsp_y1 + ypo) #1) final value: 362 142
+        canvas.create_text(gsp_x1, gsp_y1, anchor=SE, font="Purisa",text="M")
+        
         canvas.pack(fill=BOTH, expand=0)
 
 root = tk.Tk()
