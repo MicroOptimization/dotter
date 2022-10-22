@@ -40,10 +40,10 @@ class grid(Frame):
         self.make_grid()
 
 
-    def get_box_shade(cur_val, maximum) -> str:
-        pom = cur_val / maximum #pom = percentage of max value
-        print(pom)
+    def get_box_shade(self, cur_val, maximum) -> str:
+        pom = 100 * (cur_val / maximum) #pom = percentage of max value
         shade = "#"
+        
         if (80 < pom) & (pom <= 100):
             shade += "5ff0f2"
         elif (60 < pom) & (pom <= 80):
@@ -82,11 +82,15 @@ class grid(Frame):
         #print(last_date)
 
         
+
+
         
         self.master.title("Dotter")
         self.pack(fill=BOTH, expand=0)
 
-        canvas = Canvas(self)
+        canvas = Canvas(self) #important ************************
+
+        
         xpo = 0 #x positional offset
         ypo = 0 #y positional offset
 
@@ -98,31 +102,31 @@ class grid(Frame):
         square_dim = 20
         #canvas.create_rectangle(2, 2, 52, 52, outline="#111111", fill="#fb0")
 
+        #get_box_shade(cur_val, maximum)
+
+        #print(df.loc[cur_day][1]) #column 1 (column is 2nd index of loc)
         cur_day = 0
-        
+        cur_data = 0
+        ppt_len = len(df)
         grid_width = 18
         for j in range(grid_width):
-            xpo = j * square_dim
+            xpo = j * square_dim #important
             for i in range(7):
-                ypo = i * square_dim
-                cur_day += 1
-                if cur_day > 120:
-                    fill_color = "#999999"
-                elif cur_day > 90:
-                    fill_color = "#666666"
-                elif cur_day > 60:
-                    fill_color = "#444444"
-                elif cur_day > 30:
-                    fill_color = "#333333"
-                else:
-                    fill_color = "#222222"
-                #fill_color = "#fb0"
+                ypo = i * square_dim #important
+
+                fill_color = "#fb0"
+                
+                if cur_day < ppt_len:  
+                    cur_data = df.loc[cur_day][1]
+                    #print(cur_data)
+                    cur_day += 1
+                    fill_color = self.get_box_shade(cur_data, maximum)
+                
                 
                 canvas.create_rectangle(gsp_x1 + xpo, gsp_y1 + ypo, gsp_x2 + xpo, gsp_y2 + ypo, outline="#111111", fill=fill_color)
-           
-        
-        
-        
+                
+                #print(gsp_x2 + xpo, gsp_y2 + ypo) #2) final value: 382 162 
+                #print(gsp_x1 + xpo, gsp_y1 + ypo) #1) final value: 362 142
         canvas.pack(fill=BOTH, expand=0)
 
 root = tk.Tk()
@@ -138,5 +142,20 @@ c.pack(fill=tk.BOTH, expand=True)
 
 
 root.mainloop()
+
+
+
+"""
+if cur_day > 120:
+    fill_color = "#999999"
+elif cur_day > 90:
+    fill_color = "#666666"
+elif cur_day > 60:
+    fill_color = "#444444"
+elif cur_day > 30:
+    fill_color = "#333333"
+else:
+    fill_color = "#222222"
+"""
 
 
