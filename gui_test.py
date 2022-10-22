@@ -109,15 +109,15 @@ class grid(Frame):
         cur_data = 0
         ppt_len = len(df)
         grid_width = 18
-        for j in range(grid_width):
+        for j in range(grid_width, 0, -1):
             xpo = j * square_dim #important
-            for i in range(7):
+            for i in range(7, 0, -1):
                 ypo = i * square_dim #important
 
                 fill_color = "#fb0"
                 
                 if cur_day < ppt_len:  
-                    cur_data = df.loc[cur_day][1]
+                    cur_data = df.loc[ppt_len - 1 - cur_day][1]
                     #print(cur_data)
                     cur_day += 1
                     fill_color = self.get_box_shade(cur_data, maximum)
