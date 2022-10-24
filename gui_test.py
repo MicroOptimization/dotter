@@ -64,21 +64,44 @@ class grid(Frame):
         sheet_name = "leetcode_tracking"
         df = pandas.read_excel(sheet_name + ".xlsx")
 
+        #stats
+        """
+        maximum
+        total
+        first_date
+        last_date
+        days_since_start
+        avg_reps_per_day
+        """
+        #stat collection
         maximum = 0
+        total = 0
         for i in range(len(df)):
-            if df.loc[i][1] > maximum:
+            cur = df.loc[i][1]
+            if cur > maximum:
                 maximum = df.loc[i][1]
-        #print("maximum" , maximum)
-
-        
+            total += cur
 
         
         #we're looking for the day of the week that's last recorded in our spreadsheet
         #the below few lines does that
-        last_date = df.loc[len(df) - 1][0]     
-        date_split = last_date.split("-")
-        date = datetime.datetime(int(date_split[2]), int(date_split[0]), int(date_split[1]), 0, 0, 0, 0)
-        last_weekday = date.weekday() #0 = monday
+        first_date = df.loc[0][0] #stats
+        last_date = df.loc[len(df) - 1][0] #stats
+        
+        first_date_split = first_date.split("-")
+        first_datetime = datetime.datetime(int(first_date_split[2]), int(first_date_split[0]), int(first_date_split[1]), 0, 0, 0, 0)
+
+        last_date_split = last_date.split("-")
+        last_datetime = datetime.datetime(int(last_date_split[2]), int(last_date_split[0]), int(last_date_split[1]), 0, 0, 0, 0)
+    
+        last_weekday = last_datetime.weekday() #0 = monday
+
+        days_since_start = (last_datetime - first_datetime).days
+        #print(days_since_start)
+        
+        avg_reps_per_day = total / days_since_start
+        #print(round(avg_reps_per_day, 1))
+        
         #print("lwd:" , last_weekday)
         #print("lwd: " , last_weekday)
         #print(last_date)
