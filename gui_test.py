@@ -81,7 +81,7 @@ class grid(Frame):
             if cur > maximum:
                 maximum = df.loc[i][1]
             total += cur
-
+        print(total)
         
         #we're looking for the day of the week that's last recorded in our spreadsheet
         #the below few lines does that
@@ -107,14 +107,15 @@ class grid(Frame):
         #print(last_date)
 
         #oct 6, = thursday = 3        
-
+        
 
         
         self.master.title("Dotter")
         self.pack(fill=BOTH, expand=0)
 
         canvas = Canvas(self) #important ************************
-
+        #FFDD00 #a nice yellow color
+        canvas = tk.Canvas(root, height=220, width=500, bg='black')
         
         xpo = 0 #x positional offset #determines current x position for next square
         ypo = 0 #y positional offset #determines current y position for next square
@@ -157,23 +158,24 @@ class grid(Frame):
                     fill_color = self.get_box_shade(cur_data, maximum)
                 
                 
-                canvas.create_rectangle(gsp_x1 + xpo, gsp_y1 + ypo, gsp_x2 + xpo, gsp_y2 + ypo, outline="#111111", fill=fill_color)
+                canvas.create_rectangle(gsp_x1 + xpo, gsp_y1 + ypo, gsp_x2 + xpo, gsp_y2 + ypo, outline="#111111", fill=fill_color) #important
                 
                 #print(gsp_x2 + xpo, gsp_y2 + ypo) #2) final value: 382 162 
                 #print(gsp_x1 + xpo, gsp_y1 + ypo) #1) final value: 362 142
         canvas.create_text(gsp_x1, gsp_y1, anchor=SE, font="Purisa",text="M")
         
-        canvas.pack(fill=BOTH, expand=0)
+        
+        canvas.pack(fill=BOTH, expand=True)
 
 root = tk.Tk()
 
-
-
 ex = grid()
+#ex.configure(bg='#FFDD00')
+#ex.pack(tk.BOTH, expand=True)
+#c = tk.Canvas(root, height=180, width=500, bg='white')
+#c.pack(fill=tk.BOTH, expand=True)
 
-c = tk.Canvas(root, height=180, width=500, bg='white')
-c.pack(fill=tk.BOTH, expand=True)
-
+#c.configure(bg='#FFDD00')
 #c.bind('<Configure>', create_grid)
 
 
