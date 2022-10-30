@@ -79,8 +79,14 @@ class grid(Frame):
         for i in range(len(df)):
             cur = df.loc[i][1]
             if cur > maximum:
-                maximum = df.loc[i][1]
-            total += cur
+                maximum = cur
+                
+            if not pandas.isnull(df.loc[i][2]):
+                 total += df.loc[i][2]    
+            if not pandas.isnull(df.loc[i][3]):
+                 total += df.loc[i][3]
+            if not pandas.isnull(df.loc[i][4]):
+                 total += df.loc[i][4]   
         print(total)
         
         #we're looking for the day of the week that's last recorded in our spreadsheet
