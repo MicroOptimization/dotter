@@ -80,7 +80,6 @@ class grid(Frame):
             cur = df.loc[i][1]
             if cur > maximum:
                 maximum = cur
-                
             if not pandas.isnull(df.loc[i][2]):
                  total += df.loc[i][2]    
             if not pandas.isnull(df.loc[i][3]):
@@ -168,8 +167,14 @@ class grid(Frame):
                 
                 #print(gsp_x2 + xpo, gsp_y2 + ypo) #2) final value: 382 162 
                 #print(gsp_x1 + xpo, gsp_y1 + ypo) #1) final value: 362 142
-        canvas.create_text(gsp_x1, gsp_y1, anchor=SE, font="Purisa",text="M")
-        
+        date_marker_color = "white"
+        canvas.create_text(gsp_x1 + 10, gsp_y1 + 30, anchor=CENTER, font="Purisa",text="M", fill=date_marker_color)
+        canvas.create_text(gsp_x1 + 10, gsp_y1 + 50, anchor=CENTER, font="Purisa",text="T", fill=date_marker_color)
+        canvas.create_text(gsp_x1 + 10, gsp_y1 + 70, anchor=CENTER, font="Purisa",text="W", fill=date_marker_color)
+        canvas.create_text(gsp_x1 + 10, gsp_y1 + 90, anchor=CENTER, font="Purisa",text="T", fill=date_marker_color)
+        canvas.create_text(gsp_x1 + 10, gsp_y1 + 110, anchor=CENTER, font="Purisa",text="F", fill=date_marker_color)
+        canvas.create_text(gsp_x1 + 10, gsp_y1 + 130, anchor=CENTER, font="Purisa",text="S", fill=date_marker_color)
+        canvas.create_text(gsp_x1 + 10, gsp_y1 + 150, anchor=CENTER, font="Purisa",text="S", fill=date_marker_color)
         
         canvas.pack(fill=BOTH, expand=True)
 
