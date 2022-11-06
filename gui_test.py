@@ -3,6 +3,8 @@ from tkinter import *
 from tkinter import filedialog
 import pandas
 import datetime
+import os
+from tkinter.messagebox import showinfo
 
 """
 def create_grid(event=None):
@@ -35,11 +37,13 @@ We need TODO:
 
 
 class grid(Frame):
+    current_file_name = "leetcode_tracking" 
+    
     def __init__(self):
         super().__init__()
 
         self.make_grid()
-
+        
 
     def get_box_shade(self, cur_val, maximum) -> str:
         
@@ -64,11 +68,24 @@ class grid(Frame):
         return shade
 
     def open_file_window(self):
-        print("hi")
+        cd = os.getcwd() 
+        filetypes = (
+            ('Excel files', '*.xlsx'),
+            ('text files', '*.txt'),
+            ('All files', '*.*')
+        )
+
+        filename = filedialog.askopenfilename(
+            title='Open a file',
+            initialdir= cd + "/data",
+            filetypes=filetypes)
+        current_file_name = filename
+        self.make_grid()
     
     def make_grid(self):
-
+        print(self.current_file_name)
         #filename = filedialog.askopenfilename()
+        
         sheet_name = "data/" + "leetcode_tracking"
         df = pandas.read_excel(sheet_name + ".xlsx")
         
@@ -76,7 +93,9 @@ class grid(Frame):
             root,
             text='Select File',
             command=self.open_file_window,
-            bg ="white"
+            bg = "white",
+            highlightthickness=0,
+            borderwidth=0
         )
         #root.bg = "#ffdd00"
         open_button.master.bg = "black"
@@ -137,7 +156,7 @@ class grid(Frame):
 
         canvas = Canvas(self) #important ************************
         #FFDD00 #a nice yellow color
-        canvas = tk.Canvas(root, height=220, width=500, bg='black')
+        canvas = tk.Canvas(root, height=220, width=500, bg='black', highlightthickness=0, borderwidth=0)
         
         xpo = 0 #x positional offset #determines current x position for next square
         ypo = 0 #y positional offset #determines current y position for next square
@@ -206,7 +225,7 @@ ex = grid()
 #c.configure(bg='#FFDD00')
 #c.bind('<Configure>', create_grid)
 
-
+root.configure(bg = "black")
 root.mainloop()
 
 
