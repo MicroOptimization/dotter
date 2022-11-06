@@ -38,6 +38,7 @@ We need TODO:
 
 class grid(Frame):
     current_file_name = "leetcode_tracking" 
+    #canvas = Canvas()
     
     def __init__(self):
         super().__init__()
@@ -75,31 +76,26 @@ class grid(Frame):
             ('All files', '*.*')
         )
 
+        #C:/Users/Codia/Desktop/dotter/dotter/data/auditions.xlsx
+        
         filename = filedialog.askopenfilename(
             title='Open a file',
             initialdir= cd + "/data",
             filetypes=filetypes)
-        current_file_name = filename
-        self.make_grid()
+        temp = filename.split("/")[-1]
+        temp = temp.split(".")[0]
+        
+        self.current_file_name = temp
+        print(self.current_file_name)
     
     def make_grid(self):
         print(self.current_file_name)
         #filename = filedialog.askopenfilename()
         
-        sheet_name = "data/" + "leetcode_tracking"
+        sheet_name = "data/" + self.current_file_name
         df = pandas.read_excel(sheet_name + ".xlsx")
         
-        open_button = tk.Button(
-            root,
-            text='Select File',
-            command=self.open_file_window,
-            bg = "white",
-            highlightthickness=0,
-            borderwidth=0
-        )
-        #root.bg = "#ffdd00"
-        open_button.master.bg = "black"
-        open_button.pack(expand=True)
+        
         #stats
         """
         maximum
@@ -137,10 +133,13 @@ class grid(Frame):
     
         last_weekday = last_datetime.weekday() #0 = monday
 
-        days_since_start = (last_datetime - first_datetime).days
+
+
+
+        ###days_since_start = (last_datetime - first_datetime).days
         #print(days_since_start)
         
-        avg_reps_per_day = total / days_since_start
+        ###avg_reps_per_day = total / days_since_start
         #print(round(avg_reps_per_day, 1))
         
         #print("lwd:" , last_weekday)
@@ -212,8 +211,24 @@ class grid(Frame):
         #canvas.create_text(gsp_x1 + 10, gsp_y1 + 130, anchor=CENTER, font="Purisa",text="S", fill=date_marker_color)
         canvas.create_text(gsp_x1 + 10, gsp_y1 + 150, anchor=CENTER, font="Purisa",text="S", fill=date_marker_color)
         
-        canvas.pack(fill=BOTH, expand=True)
+        #weird white border between canvas and button is from top of canvas changing the order got rid of it idk
 
+        
+        open_button = tk.Button(
+            root,
+            text='Select File',
+            command=self.open_file_window,
+            bg = "white",
+            highlightthickness=0,
+            borderwidth=0
+        )
+        #root.bg = "#ffdd00"
+        open_button.master.bg = "black"
+        open_button.pack(expand=True)
+
+        
+        canvas.pack(fill=BOTH, expand=True) #important
+        
 root = tk.Tk()
 
 ex = grid()
