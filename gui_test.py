@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+from tkinter import filedialog
 import pandas
 import datetime
 
@@ -41,6 +42,8 @@ class grid(Frame):
 
 
     def get_box_shade(self, cur_val, maximum) -> str:
+        
+        
         pom = 100 * (cur_val / maximum) #pom = percentage of max value
         shade = "#"
         
@@ -59,11 +62,25 @@ class grid(Frame):
         else:
             shade = shade
         return shade
+
+    def open_file_window(self):
+        print("hi")
     
     def make_grid(self):
+
+        #filename = filedialog.askopenfilename()
         sheet_name = "data/" + "leetcode_tracking"
         df = pandas.read_excel(sheet_name + ".xlsx")
-
+        
+        open_button = tk.Button(
+            root,
+            text='Select File',
+            command=self.open_file_window,
+            bg ="white"
+        )
+        #root.bg = "#ffdd00"
+        open_button.master.bg = "black"
+        open_button.pack(expand=True)
         #stats
         """
         maximum
@@ -208,3 +225,36 @@ else:
 """
 
 
+
+
+"""
+def select_file():
+    filetypes = (
+        ('text files', '*.txt'),
+        ('All files', '*.*')
+    )
+
+    filename = fd.askopenfilename(
+        title='Open a file',
+        initialdir='/',
+        filetypes=filetypes)
+
+    showinfo(
+        title='Selected File',
+        message=filename
+    )
+
+
+# open button
+open_button = ttk.Button(
+    root,
+    text='Open a File',
+    command=select_file
+)
+
+open_button.pack(expand=True)
+
+
+# run the application
+root.mainloop()
+"""
