@@ -30,6 +30,8 @@ We need TODO:
 4) draw a blank week in front of it
 5) draw 120 days worth of squares behind it.
 6) fill in squares as neccesary
+
+^this stuff's all done
 """
 
 #def create_grid(event=None):
@@ -66,7 +68,7 @@ class grid(Frame):
         elif (pom <= 0):
             shade += "ffffff"
         else:
-            shade = shade
+            shade = "white"
         return shade
 
     def open_file_window(self):
