@@ -38,14 +38,15 @@ We need TODO:
 
 class grid(Frame):
     current_file_name = "leetcode_tracking" 
-    #canvas = Canvas()
+    canvas = None
+    first_open = True
     
     def __init__(self):
         super().__init__()
 
         self.make_grid()
         
-
+    
     def get_box_shade(self, cur_val, maximum) -> str:
         
         
@@ -87,7 +88,9 @@ class grid(Frame):
         
         self.current_file_name = temp
         print(self.current_file_name)
-    
+        self.canvas.delete("all")
+        self.make_grid()
+        
     def make_grid(self):
         print(self.current_file_name)
         #filename = filedialog.askopenfilename()
@@ -153,10 +156,24 @@ class grid(Frame):
         self.master.title("Dotter")
         self.pack(fill=BOTH, expand=0)
 
-        canvas = Canvas(self) #important ************************
-        #FFDD00 #a nice yellow color
-        canvas = tk.Canvas(root, height=220, width=500, bg='black', highlightthickness=0, borderwidth=0)
-        
+        if self.first_open:
+            self.canvas = Canvas(self) #important ************************
+            #FFDD00 #a nice yellow color
+            self.canvas = tk.Canvas(root, height=220, width=500, bg='black', highlightthickness=0, borderwidth=0)
+            self.first_open = False
+
+            #only make the button the first time it opens
+            open_button = tk.Button(
+                root,
+                text='Select File',
+                command=self.open_file_window,
+                bg = "white",
+                highlightthickness=0,
+                borderwidth=0
+            )
+            #root.bg = "#ffdd00"
+            open_button.master.bg = "black"
+            open_button.pack(expand=True)
         xpo = 0 #x positional offset #determines current x position for next square
         ypo = 0 #y positional offset #determines current y position for next square
 
@@ -198,36 +215,26 @@ class grid(Frame):
                     fill_color = self.get_box_shade(cur_data, maximum)
                 
                 
-                canvas.create_rectangle(gsp_x1 + xpo, gsp_y1 + ypo, gsp_x2 + xpo, gsp_y2 + ypo, outline="#111111", fill=fill_color) #important
+                self.canvas.create_rectangle(gsp_x1 + xpo, gsp_y1 + ypo, gsp_x2 + xpo, gsp_y2 + ypo, outline="#111111", fill=fill_color) #important
                 
                 #print(gsp_x2 + xpo, gsp_y2 + ypo) #2) final value: 382 162 
                 #print(gsp_x1 + xpo, gsp_y1 + ypo) #1) final value: 362 142
         date_marker_color = "white"
-        canvas.create_text(gsp_x1 + 10, gsp_y1 + 30, anchor=CENTER, font="Purisa",text="M", fill=date_marker_color)
+        self.canvas.create_text(gsp_x1 + 10, gsp_y1 + 30, anchor=CENTER, font="Purisa",text="M", fill=date_marker_color)
         #canvas.create_text(gsp_x1 + 10, gsp_y1 + 50, anchor=CENTER, font="Purisa",text="T", fill=date_marker_color)
-        canvas.create_text(gsp_x1 + 10, gsp_y1 + 70, anchor=CENTER, font="Purisa",text="W", fill=date_marker_color)
+        self.canvas.create_text(gsp_x1 + 10, gsp_y1 + 70, anchor=CENTER, font="Purisa",text="W", fill=date_marker_color)
         #canvas.create_text(gsp_x1 + 10, gsp_y1 + 90, anchor=CENTER, font="Purisa",text="T", fill=date_marker_color)
-        canvas.create_text(gsp_x1 + 10, gsp_y1 + 110, anchor=CENTER, font="Purisa",text="F", fill=date_marker_color)
+        self.canvas.create_text(gsp_x1 + 10, gsp_y1 + 110, anchor=CENTER, font="Purisa",text="F", fill=date_marker_color)
         #canvas.create_text(gsp_x1 + 10, gsp_y1 + 130, anchor=CENTER, font="Purisa",text="S", fill=date_marker_color)
-        canvas.create_text(gsp_x1 + 10, gsp_y1 + 150, anchor=CENTER, font="Purisa",text="S", fill=date_marker_color)
+        self.canvas.create_text(gsp_x1 + 10, gsp_y1 + 150, anchor=CENTER, font="Purisa",text="S", fill=date_marker_color)
         
         #weird white border between canvas and button is from top of canvas changing the order got rid of it idk
 
         
-        open_button = tk.Button(
-            root,
-            text='Select File',
-            command=self.open_file_window,
-            bg = "white",
-            highlightthickness=0,
-            borderwidth=0
-        )
-        #root.bg = "#ffdd00"
-        open_button.master.bg = "black"
-        open_button.pack(expand=True)
+        
 
         
-        canvas.pack(fill=BOTH, expand=True) #important
+        self.canvas.pack(fill=BOTH, expand=True) #important
         
 root = tk.Tk()
 
