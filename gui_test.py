@@ -152,6 +152,8 @@ class grid(Frame):
         #oct 6, = thursday = 3        
         
 
+        canvas_height = 220
+        canvas_width = 500
         
         self.master.title("Dotter")
         self.pack(fill=BOTH, expand=0)
@@ -159,7 +161,7 @@ class grid(Frame):
         if self.first_open:
             self.canvas = Canvas(self) #important ************************
             #FFDD00 #a nice yellow color
-            self.canvas = tk.Canvas(root, height=220, width=500, bg='black', highlightthickness=0, borderwidth=0)
+            self.canvas = tk.Canvas(root, height=canvas_height, width=canvas_width, bg='black', highlightthickness=0, borderwidth=0)
             self.first_open = False
 
             #only make the button the first time it opens
@@ -230,6 +232,8 @@ class grid(Frame):
         
         #weird white border between canvas and button is from top of canvas changing the order got rid of it idk
 
+        #shows the current file
+        self.canvas.create_text(canvas_width / 2, 15, anchor=CENTER, font="Purisa",text=self.current_file_name + ".xlsx", fill=date_marker_color)
         
         
 
